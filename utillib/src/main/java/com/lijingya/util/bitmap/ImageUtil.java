@@ -17,58 +17,61 @@ public class ImageUtil {
 
     /**
      * 从resource中压缩图片
-     * @param res
-     * @param viewId
-     * @param reqWidth
-     * @param reqHeight
-     * @return
+     *
+     * @param res Resources
+     * @param viewId id
+     * @param reqWidth reqWidth
+     * @param reqHeight reqHeight
+     * @return Bitmap
      */
     public static Bitmap resizePictureFromResource(Resources res, int viewId, int reqWidth, int reqHeight) {
         Options options = new Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(res, viewId, options);
         options.inSampleSize = calculateSampleSize(options, reqWidth, reqWidth);
-        options.inJustDecodeBounds=false;
-        return  BitmapFactory.decodeResource(res,viewId,options);
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, viewId, options);
     }
 
     /**
      * 获取缩放比
-     * @param options
-     * @param reqWidth
-     * @param reqHeight
-     * @return
+     *
+     * @param options Options
+     * @param reqWidth int
+     * @param reqHeight int
+     * @return int
      */
     public static int calculateSampleSize(Options options, int reqWidth, int reqHeight) {
-      if (reqWidth==0||reqHeight==0){
-          return 1;
-      }
-      int height=options.outHeight;
-      int width=options.outWidth;
-      int inSampleSize=1;
-      if (height>reqHeight||width>reqWidth){
-          int halfWidth=height/2;
-          int halfHeight=width/2;
-          while ((halfHeight/inSampleSize)>=reqHeight&&(halfWidth/inSampleSize)>=reqWidth){
-              inSampleSize*=2;
-          }
-      }
-      return inSampleSize;
+        if (reqWidth == 0 || reqHeight == 0) {
+            return 1;
+        }
+        int height = options.outHeight;
+        int width = options.outWidth;
+        int inSampleSize = 1;
+        if (height > reqHeight || width > reqWidth) {
+            int halfWidth = height / 2;
+            int halfHeight = width / 2;
+            while ((halfHeight / inSampleSize) >= reqHeight && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+        return inSampleSize;
     }
 
     /**
      * 从文件的描述符中获取bitmap
-     * @param fd
-     * @param reqWidth
-     * @param reqHeight
-     * @return
+     *
+     * @param fd 文件描述符
+     * @param reqWidth 宽度
+     * @param reqHeight 导读
+     * @return Bitmap
      */
-    public static  Bitmap resizePictureFromFileDescriptor(FileDescriptor fd,int reqWidth,int reqHeight){
+    public static Bitmap resizePictureFromFileDescriptor(FileDescriptor fd, int reqWidth, int reqHeight) {
         Options options = new Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFileDescriptor(fd, null, options);
         options.inSampleSize = calculateSampleSize(options, reqWidth, reqWidth);
-        options.inJustDecodeBounds=false;
-        return  BitmapFactory.decodeFileDescriptor(fd,null,options);
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFileDescriptor(fd, null, options);
     }
 }
