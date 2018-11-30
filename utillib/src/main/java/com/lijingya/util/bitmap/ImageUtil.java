@@ -1,0 +1,74 @@
+package com.lijingya.util.bitmap;
+
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
+import java.io.FileDescriptor;
+
+/**
+ * @author lijingya
+ * @description 图片工具
+ * @email lijingya@91118.com
+ * @createDate 2018/11/27
+ * @company 杭州天音
+ */
+public class ImageUtil {
+
+    /**
+     * 从resource中压缩图片
+     * @param res
+     * @param viewId
+     * @param reqWidth
+     * @param reqHeight
+     * @return
+     */
+    public static Bitmap resizePictureFromResource(Resources res, int viewId, int reqWidth, int reqHeight) {
+        Options options = new Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, viewId, options);
+        options.inSampleSize = caculateSampleSize(options, reqWidth, reqWidth);
+        options.inJustDecodeBounds=false;
+        return  BitmapFactory.decodeResource(res,viewId,options);
+    }
+
+    /**
+     * 获取缩放比
+     * @param options
+     * @param reqWidth
+     * @param reqHeight
+     * @return
+     */
+    public static int caculateSampleSize(Options options, int reqWidth, int reqHeight) {
+      if (reqWidth==0||reqHeight==0){
+          return 1;
+      }
+      int height=options.outHeight;
+      int width=options.outWidth;
+      int inSampleSize=1;
+      if (height>reqHeight||width>reqWidth){
+          int halfWidth=height/2;
+          int halfHeight=width/2;
+          while ((halfHeight/inSampleSize)>=reqHeight&&(halfWidth/inSampleSize)>=reqWidth){
+              inSampleSize*=2;
+          }
+      }
+      return inSampleSize;
+    }
+
+    /**
+     * 从文件的描述符中获取bitmap
+     * @param fd
+     * @param reqWidth
+     * @param reqHeight
+     * @return
+     */
+    public static  Bitmap resizePictureFromFileDescriptor(FileDescriptor fd,int reqWidth,int reqHeight){
+        Options options = new Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFileDescriptor(fd, null, options);
+        options.inSampleSize = caculateSampleSize(options, reqWidth, reqWidth);
+        options.inJustDecodeBounds=false;
+        return  BitmapFactory.decodeFileDescriptor(fd,null,options);
+    }
+}
