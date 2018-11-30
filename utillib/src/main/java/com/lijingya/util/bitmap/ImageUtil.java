@@ -27,7 +27,7 @@ public class ImageUtil {
         Options options = new Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(res, viewId, options);
-        options.inSampleSize = caculateSampleSize(options, reqWidth, reqWidth);
+        options.inSampleSize = calculateSampleSize(options, reqWidth, reqWidth);
         options.inJustDecodeBounds=false;
         return  BitmapFactory.decodeResource(res,viewId,options);
     }
@@ -39,7 +39,7 @@ public class ImageUtil {
      * @param reqHeight
      * @return
      */
-    public static int caculateSampleSize(Options options, int reqWidth, int reqHeight) {
+    public static int calculateSampleSize(Options options, int reqWidth, int reqHeight) {
       if (reqWidth==0||reqHeight==0){
           return 1;
       }
@@ -67,7 +67,7 @@ public class ImageUtil {
         Options options = new Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFileDescriptor(fd, null, options);
-        options.inSampleSize = caculateSampleSize(options, reqWidth, reqWidth);
+        options.inSampleSize = calculateSampleSize(options, reqWidth, reqWidth);
         options.inJustDecodeBounds=false;
         return  BitmapFactory.decodeFileDescriptor(fd,null,options);
     }
