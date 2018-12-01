@@ -61,6 +61,19 @@ public class FileUtil {
     }
 
     /**
+     * /storage/emulated/0/Android/data/packagename/files/Pictures
+     * 应用外部存储空间(数据文件私有，系统媒体文件无法访问
+     * 卸载app时，会自动删除文件（前提是使用虚拟外部存储）
+     *
+     * @param context
+     * @param type    DIRECTORY_MUSIC, DIRECTORY_PODCASTS, DIRECTORY_RINGTONES, DIRECTORY_ALARMS, DIRECTORY_NOTIFICATIONS, DIRECTORY_PICTURES, DIRECTORY_MOVIES, DIRECTORY_DOWNLOADS, DIRECTORY_DCIM, or DIRECTORY_DOCUMENTS
+     * @return
+     */
+    public static String getExternalFilesDir(Context context, String type) {
+        return context.getExternalFilesDir(type).getAbsolutePath();
+    }
+
+    /**
      * 应用外部存储空间（数据文件非私有，可以被手机的系统程序访问）
      * 官方建议，不要直接使用该目录，为了避免污染用户的根命名空间，应用私有的数据，
      * 应该放在 Context.getExternalFilesDir目录下
@@ -68,9 +81,22 @@ public class FileUtil {
      *
      * @return /storage/emulated/0
      */
-    public static String getExternalStoragePublicDirectory() {
+    public static String getExternalStorageDirectory() {
         return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
+    /**
+     * 应用外部存储空间（数据文件非私有，可以被手机的系统程序访问
+     * 这个目录是用来存放各种类型的文件的目录，
+     * 在这里用户可以分类管理不同类型的文件（例如音乐、图片、电影等）；
+     *
+     * 当type为Environment.DIRECTORY_DCIM 时路径为 /storage/emulated/0/DCIM
+     *
+     * @param type DIRECTORY_MUSIC, DIRECTORY_PODCASTS, DIRECTORY_RINGTONES, DIRECTORY_ALARMS, DIRECTORY_NOTIFICATIONS, DIRECTORY_PICTURES, DIRECTORY_MOVIES, DIRECTORY_DOWNLOADS, DIRECTORY_DCIM, or DIRECTORY_DOCUMENTS
+     * @return
+     */
+    public static String getExternalStoragePublicDirectory(String type) {
+         return Environment.getExternalStoragePublicDirectory(type).getAbsolutePath();
+    }
 
 }
