@@ -28,7 +28,7 @@ public class ImageUtil {
         Options options = new Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(res, viewId, options);
-        options.inSampleSize = calculateSampleSize(options, reqWidth, reqWidth);
+        options.inSampleSize = calculateSampleSize(options, reqWidth, reqHeight);
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, viewId, options);
     }
