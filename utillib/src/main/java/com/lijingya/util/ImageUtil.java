@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
+
 import java.io.FileDescriptor;
 
 /**
@@ -18,9 +19,9 @@ public class ImageUtil {
     /**
      * 从resource中压缩图片
      *
-     * @param res Resources
-     * @param viewId id
-     * @param reqWidth reqWidth
+     * @param res       Resources
+     * @param viewId    id
+     * @param reqWidth  reqWidth
      * @param reqHeight reqHeight
      * @return Bitmap
      */
@@ -36,8 +37,8 @@ public class ImageUtil {
     /**
      * 获取缩放比
      *
-     * @param options Options
-     * @param reqWidth int
+     * @param options   Options
+     * @param reqWidth  int
      * @param reqHeight int
      * @return int
      */
@@ -61,8 +62,8 @@ public class ImageUtil {
     /**
      * 从文件的描述符中获取bitmap
      *
-     * @param fd 文件描述符
-     * @param reqWidth 宽度
+     * @param fd        文件描述符
+     * @param reqWidth  宽度
      * @param reqHeight 导读
      * @return Bitmap
      */
@@ -70,7 +71,7 @@ public class ImageUtil {
         Options options = new Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFileDescriptor(fd, null, options);
-        options.inSampleSize = calculateSampleSize(options, reqWidth, reqWidth);
+        options.inSampleSize = calculateSampleSize(options, reqWidth, reqHeight);
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFileDescriptor(fd, null, options);
     }

@@ -5,6 +5,7 @@ import android.content.Context;
 
 import java.util.Iterator;
 import java.util.List;
+
 /**
  * @author lijingya
  * @description 获取程序信息的工具
@@ -12,14 +13,18 @@ import java.util.List;
  * @createDate 2018/11/27
  * @company 杭州天音
  */
-public class AppProcessUtils {
+public final class AppProcessUtils {
+
+    private AppProcessUtils() {
+        throw new UnsupportedOperationException("不支持构造函数");
+    }
 
     /**
      * 获取指定进程id的进程名称
      *
      * @param pid 进程id
      */
-    public static String getProccessName( int pid) {
+    public static String getProccessName(int pid) {
         ActivityManager am = (ActivityManager) AppUtil.getApp().getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> list = am.getRunningAppProcesses();
         Iterator<ActivityManager.RunningAppProcessInfo> iterator = list.iterator();
