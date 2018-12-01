@@ -1,8 +1,8 @@
-package com.lijingya.util.app;
+package com.lijingya.util;
 
 import android.app.ActivityManager;
-import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,19 +13,23 @@ import java.util.List;
  * @createDate 2018/11/27
  * @company 杭州天音
  */
-public class AppUtil {
+public final class AppProcessUtils {
+
+    private AppProcessUtils() {
+        throw new UnsupportedOperationException("不支持构造函数");
+    }
 
     /**
      * 获取指定进程id的进程名称
      *
      * @param pid 进程id
      */
-    public static String getProccessName(Context context, int pid) {
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<RunningAppProcessInfo> list = am.getRunningAppProcesses();
-        Iterator<RunningAppProcessInfo> iterator = list.iterator();
+    public static String getProccessName(int pid) {
+        ActivityManager am = (ActivityManager) AppUtil.getApp().getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> list = am.getRunningAppProcesses();
+        Iterator<ActivityManager.RunningAppProcessInfo> iterator = list.iterator();
         while (iterator.hasNext()) {
-            RunningAppProcessInfo info = iterator.next();
+            ActivityManager.RunningAppProcessInfo info = iterator.next();
             try {
                 if (info.pid == pid) {
                     return info.processName;

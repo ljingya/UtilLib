@@ -1,4 +1,4 @@
-package com.lijingya.util.io;
+package com.lijingya.util;
 
 import java.io.Closeable;
 
