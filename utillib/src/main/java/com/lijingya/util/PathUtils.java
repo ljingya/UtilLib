@@ -10,9 +10,11 @@ import android.os.Environment;
  * @createDate 2018/11/27
  * @company 杭州天音
  */
-public class PathUtil {
+public class PathUtils {
 
-    private 
+    private PathUtils() {
+        throw new UnsupportedOperationException("不支持构造函数");
+    }
 
     /**
      * 判断Sd是否挂载
@@ -23,32 +25,85 @@ public class PathUtil {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
+    /**
+     * @return /system
+     */
+    public static String getRootPath() {
+        return Environment.getRootDirectory().getAbsolutePath();
+    }
+
+    /**
+     * @return /data
+     */
+    public static String getDataPath() {
+        return Environment.getDataDirectory().getAbsolutePath();
+    }
+
+    /**
+     * @return /cache
+     */
+    public static String getDownloadCachePath() {
+        return Environment.getDownloadCacheDirectory().getAbsolutePath();
+    }
+
+
+
+
 
     /*    内部存储路径  */
 
     /**
-     * 这个目录和getFilesDir()目录最大的不同在于：当安卓设备的存储空间少，
-     * 或者不够用的时候，系统会自动删除这个目录下的文件，官方建议是，超过1MB的文件，
+     * 当安卓设备的存储空间少，或者不够用的时候，系统会自动删除这个目录下的文件，官方建议:超过1MB的文件。
      * 建议存储到getExternalCacheDir()目录下
      *
-     * @param context 上下文环境
      * @return /data/data/packagename/cache
      */
-    public static String getCacheDir(Context context) {
-        return context.getCacheDir().getAbsolutePath();
+    public static String getAppInternalCacheDir() {
+        return AppUtil.getApp().getCacheDir().getAbsolutePath();
     }
 
     /**
-     * @param context 上下文环境
      * @return String /data/data/packagename/files
      */
-    public static String getFilesDir(Context context) {
-        return context.getFilesDir().getAbsolutePath();
+    public static String getAppInternalFilesDir() {
+        return AppUtil.getApp().getFilesDir().getAbsolutePath();
+    }
+
+    /**
+     * @return /data/data/packagename/databases
+     */
+    public static String getAppInternalDbsPath() {
+        return AppUtil.getApp().getApplicationInfo().dataDir + "/databases";
+    }
+
+    /**
+     * @param name 库的名称
+     * @return /data/data/packagename/databases/name
+     */
+    public static String getAppInternalDbPath(String name) {
+        return AppUtil.getApp().getDatabasePath(name).getAbsolutePath();
+    }
+
+    /**
+     * @return /data/data/package/shared_prefs
+     */
+    public static String getAppInternalSpPath() {
+        return AppUtil.getApp().getApplicationInfo().dataDir + "shared_prefs";
     }
 
 
-
     /*    外部存储路径  */
+
+    /**
+     * @return /storage/emulated/0
+     */
+    public static String getExtenralStoragePath() {
+        if (!isSdMounted()) {
+            return "";
+        }
+        return Environment.getExternalStorageDirectory().getAbsolutePath();
+    }
+
 
     /**
      * 应用外部存储空间(数据文件私有，系统媒体文件无法访问）
@@ -56,46 +111,56 @@ public class PathUtil {
      *
      * @return /storage/emulated/0/Android/data/packagename/cache
      */
-    public static String getExternalStorageDirectory(Context context) {
-        return context.getExternalCacheDir().getAbsolutePath();
+    public static String getAppExternalCachePath() {
+        if (!isSdMounted()) {
+            return "";
+        }
+        return AppUtil.getApp().getExternalCacheDir().getAbsolutePath();
     }
 
     /**
-     * /storage/emulated/0/Android/data/packagename/files/Pictures
      * 应用外部存储空间(数据文件私有，系统媒体文件无法访问
      * 卸载app时，会自动删除文件（前提是使用虚拟外部存储）
      *
      * @param context
-     * @param type    DIRECTORY_MUSIC, DIRECTORY_PODCASTS, DIRECTORY_RINGTONES, DIRECTORY_ALARMS, DIRECTORY_NOTIFICATIONS, DIRECTORY_PICTURES, DIRECTORY_MOVIES, DIRECTORY_DOWNLOADS, DIRECTORY_DCIM, or DIRECTORY_DOCUMENTS
-     * @return
+     * @return /storage/emulated/0/Android/data/packagename/files
      */
-    public static String getExternalFilesDir(Context context, String type) {
-        return context.getExternalFilesDir(type).getAbsolutePath();
+    public static String getAppExternalFilesPath(Context context) {
+        if (!isSdMounted()) {
+            return "";
+        }
+        return context.getExternalFilesDir(null).getAbsolutePath();
     }
 
     /**
-     * 应用外部存储空间（数据文件非私有，可以被手机的系统程序访问）
-     * 官方建议，不要直接使用该目录，为了避免污染用户的根命名空间，应用私有的数据，
-     * 应该放在 Context.getExternalFilesDir目录下
-     * 其他的可以被分享的文件，可以放在getExternalStoragePublicDirectory(String)目录下
-     *
-     * @return /storage/emulated/0
+     * @param type DIRECTORY_MUSIC, DIRECTORY_PODCASTS, DIRECTORY_RINGTONES,
+     *             DIRECTORY_ALARMS, DIRECTORY_NOTIFICATIONS, DIRECTORY_PICTURES,
+     *             DIRECTORY_MOVIES, DIRECTORY_DOWNLOADS, DIRECTORY_DCIM,
+     *             DIRECTORY_DOCUMENTS
+     * @return 例如当 DIRECTORY_DCIM 路径为 /storage/emulated/0/Android/data/packagename/files/DCIM
      */
-    public static String getExternalStorageDirectory() {
-        return Environment.getExternalStorageDirectory().getAbsolutePath();
+    public static String getAppExternalFilesByTypePath(String type) {
+        if (!isSdMounted()) {
+            return "";
+        }
+        return AppUtil.getApp().getExternalFilesDir(type).getAbsolutePath();
     }
 
     /**
      * 应用外部存储空间（数据文件非私有，可以被手机的系统程序访问
      * 这个目录是用来存放各种类型的文件的目录，
-     * 在这里用户可以分类管理不同类型的文件（例如音乐、图片、电影等）；
+     * 在这里用户可以分类管理不同类型的文件（例如音乐、图片、电影等）
      *
-     * 当type为Environment.DIRECTORY_DCIM 时路径为 /storage/emulated/0/DCIM
-     *
-     * @param type DIRECTORY_MUSIC, DIRECTORY_PODCASTS, DIRECTORY_RINGTONES, DIRECTORY_ALARMS, DIRECTORY_NOTIFICATIONS, DIRECTORY_PICTURES, DIRECTORY_MOVIES, DIRECTORY_DOWNLOADS, DIRECTORY_DCIM, or DIRECTORY_DOCUMENTS
-     * @return
+     * @param type DIRECTORY_MUSIC, DIRECTORY_PODCASTS, DIRECTORY_RINGTONES,
+     *             DIRECTORY_ALARMS, DIRECTORY_NOTIFICATIONS, DIRECTORY_PICTURES,
+     *             DIRECTORY_MOVIES, DIRECTORY_DOWNLOADS, DIRECTORY_DCIM,
+     *             DIRECTORY_DOCUMENTS
+     * @return 当 type 为 Environment.DIRECTORY_DCIM 时路径为 /storage/emulated/0/DCIM
      */
-    public static String getExternalStoragePublicDirectory(String type) {
+    public static String getExternalStoragePublicPath(String type) {
+        if (!isSdMounted()) {
+            return "";
+        }
         return Environment.getExternalStoragePublicDirectory(type).getAbsolutePath();
     }
 }

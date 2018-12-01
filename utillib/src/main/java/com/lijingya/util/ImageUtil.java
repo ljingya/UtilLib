@@ -1,4 +1,4 @@
-package com.lijingya.util.bitmap;
+package com.lijingya.util;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
