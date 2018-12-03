@@ -15,6 +15,6 @@ allprojects {
   
 ##### Module：
 ```
-implementation 'com.github.JyBeyond:UtilLib:v1.0'
+implementation 'com.github.TeaLeafLi:UtilLib:Tag'
 ```
   
