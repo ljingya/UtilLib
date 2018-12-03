@@ -25,7 +25,7 @@ public final class AppProcessUtils {
      * @param pid 进程id
      */
     public static String getProccessName(int pid) {
-        ActivityManager am = (ActivityManager) AppUtil.getApp().getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager) AppUtils.getApp().getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> list = am.getRunningAppProcesses();
         Iterator<ActivityManager.RunningAppProcessInfo> iterator = list.iterator();
         while (iterator.hasNext()) {

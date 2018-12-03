@@ -10,9 +10,9 @@ import android.os.Environment;
  * @createDate 2018/11/27
  * @company 杭州天音
  */
-public class FileUtil {
+public class FileUtils {
 
-    private static final String TAG = "FileUtil";
+    private static final String TAG = "FileUtils";
 
 
 

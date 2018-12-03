@@ -10,7 +10,7 @@ import android.os.Environment;
  * @createDate 2018/11/27
  * @company 杭州天音
  */
-public class PathUtils {
+public final class PathUtils {
 
     private PathUtils() {
         throw new UnsupportedOperationException("不支持构造函数");
@@ -48,8 +48,6 @@ public class PathUtils {
 
 
 
-
-
     /*    内部存储路径  */
 
     /**
@@ -59,21 +57,21 @@ public class PathUtils {
      * @return /data/data/packagename/cache
      */
     public static String getAppInternalCacheDir() {
-        return AppUtil.getApp().getCacheDir().getAbsolutePath();
+        return AppUtils.getApp().getCacheDir().getAbsolutePath();
     }
 
     /**
      * @return String /data/data/packagename/files
      */
     public static String getAppInternalFilesDir() {
-        return AppUtil.getApp().getFilesDir().getAbsolutePath();
+        return AppUtils.getApp().getFilesDir().getAbsolutePath();
     }
 
     /**
      * @return /data/data/packagename/databases
      */
     public static String getAppInternalDbsPath() {
-        return AppUtil.getApp().getApplicationInfo().dataDir + "/databases";
+        return AppUtils.getApp().getApplicationInfo().dataDir + "/databases";
     }
 
     /**
@@ -81,14 +79,14 @@ public class PathUtils {
      * @return /data/data/packagename/databases/name
      */
     public static String getAppInternalDbPath(String name) {
-        return AppUtil.getApp().getDatabasePath(name).getAbsolutePath();
+        return AppUtils.getApp().getDatabasePath(name).getAbsolutePath();
     }
 
     /**
      * @return /data/data/package/shared_prefs
      */
     public static String getAppInternalSpPath() {
-        return AppUtil.getApp().getApplicationInfo().dataDir + "shared_prefs";
+        return AppUtils.getApp().getApplicationInfo().dataDir + "shared_prefs";
     }
 
 
@@ -115,7 +113,7 @@ public class PathUtils {
         if (!isSdMounted()) {
             return "";
         }
-        return AppUtil.getApp().getExternalCacheDir().getAbsolutePath();
+        return AppUtils.getApp().getExternalCacheDir().getAbsolutePath();
     }
 
     /**
@@ -133,17 +131,15 @@ public class PathUtils {
     }
 
     /**
-     * @param type DIRECTORY_MUSIC, DIRECTORY_PODCASTS, DIRECTORY_RINGTONES,
-     *             DIRECTORY_ALARMS, DIRECTORY_NOTIFICATIONS, DIRECTORY_PICTURES,
-     *             DIRECTORY_MOVIES, DIRECTORY_DOWNLOADS, DIRECTORY_DCIM,
-     *             DIRECTORY_DOCUMENTS
+     * @param type DIRECTORY_MUSIC, DIRECTORY_PODCASTS, DIRECTORY_RINGTONES, DIRECTORY_ALARMS, DIRECTORY_NOTIFICATIONS, DIRECTORY_PICTURES, DIRECTORY_MOVIES, DIRECTORY_DOWNLOADS, DIRECTORY_DCIM,
+     * DIRECTORY_DOCUMENTS
      * @return 例如当 DIRECTORY_DCIM 路径为 /storage/emulated/0/Android/data/packagename/files/DCIM
      */
     public static String getAppExternalFilesByTypePath(String type) {
         if (!isSdMounted()) {
             return "";
         }
-        return AppUtil.getApp().getExternalFilesDir(type).getAbsolutePath();
+        return AppUtils.getApp().getExternalFilesDir(type).getAbsolutePath();
     }
 
     /**
@@ -151,10 +147,8 @@ public class PathUtils {
      * 这个目录是用来存放各种类型的文件的目录，
      * 在这里用户可以分类管理不同类型的文件（例如音乐、图片、电影等）
      *
-     * @param type DIRECTORY_MUSIC, DIRECTORY_PODCASTS, DIRECTORY_RINGTONES,
-     *             DIRECTORY_ALARMS, DIRECTORY_NOTIFICATIONS, DIRECTORY_PICTURES,
-     *             DIRECTORY_MOVIES, DIRECTORY_DOWNLOADS, DIRECTORY_DCIM,
-     *             DIRECTORY_DOCUMENTS
+     * @param type DIRECTORY_MUSIC, DIRECTORY_PODCASTS, DIRECTORY_RINGTONES, DIRECTORY_ALARMS, DIRECTORY_NOTIFICATIONS, DIRECTORY_PICTURES, DIRECTORY_MOVIES, DIRECTORY_DOWNLOADS, DIRECTORY_DCIM,
+     * DIRECTORY_DOCUMENTS
      * @return 当 type 为 Environment.DIRECTORY_DCIM 时路径为 /storage/emulated/0/DCIM
      */
     public static String getExternalStoragePublicPath(String type) {

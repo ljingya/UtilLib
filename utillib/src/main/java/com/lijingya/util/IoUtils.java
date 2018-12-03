@@ -4,12 +4,12 @@ import java.io.Closeable;
 
 /**
  * @author lijingya
- * @description 添加描述
+ * @description IO工具类
  * @email lijingya@91118.com
  * @createDate 2018/11/29
  * @company 杭州天音
  */
-public class IoUtil {
+public class IoUtils {
 
     /**
      * io流的关闭工具

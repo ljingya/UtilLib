@@ -14,7 +14,7 @@ import java.io.FileDescriptor;
  * @createDate 2018/11/27
  * @company 杭州天音
  */
-public class ImageUtil {
+public class ImageUtils {
 
     /**
      * 从resource中压缩图片

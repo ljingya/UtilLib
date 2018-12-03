@@ -15,11 +15,11 @@ import java.util.List;
  * @createDate 2018/11/27
  * @company 杭州天音
  */
-public final class AppUtil {
+public final class AppUtils {
 
     private static Application sApplication;
 
-    private AppUtil() {
+    private AppUtils() {
         throw new UnsupportedOperationException("不支持初始化");
     }
 
@@ -32,4 +32,9 @@ public final class AppUtil {
     public static Application getApp() {
         return sApplication;
     }
+
+    public static Context getAppContext() {
+        return sApplication.getApplicationContext();
+    }
+
 }
