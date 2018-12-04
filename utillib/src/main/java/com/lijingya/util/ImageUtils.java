@@ -19,9 +19,9 @@ public class ImageUtils {
     /**
      * 从resource中压缩图片
      *
-     * @param res       Resources
-     * @param viewId    id
-     * @param reqWidth  reqWidth
+     * @param res Resources
+     * @param viewId id
+     * @param reqWidth reqWidth
      * @param reqHeight reqHeight
      * @return Bitmap
      */
@@ -37,8 +37,8 @@ public class ImageUtils {
     /**
      * 获取缩放比
      *
-     * @param options   Options
-     * @param reqWidth  int
+     * @param options Options
+     * @param reqWidth int
      * @param reqHeight int
      * @return int
      */
@@ -62,8 +62,8 @@ public class ImageUtils {
     /**
      * 从文件的描述符中获取bitmap
      *
-     * @param fd        文件描述符
-     * @param reqWidth  宽度
+     * @param fd 文件描述符
+     * @param reqWidth 宽度
      * @param reqHeight 导读
      * @return Bitmap
      */

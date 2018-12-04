@@ -1,6 +1,12 @@
 package com.lijingya.util;
 
+import java.io.BufferedOutputStream;
 import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * @author lijingya
@@ -12,16 +18,24 @@ import java.io.Closeable;
 public class IoUtils {
 
     /**
-     * io流的关闭工具
+     * 关闭Io流
+     *
+     * @param closeables Closeable
      */
-    public static <T extends Closeable> void close(T t) {
-        try {
-            if (t != null) {
-                t.close();
+    public static void closeIO(final Closeable... closeables) {
+        if (closeables == null) {
+            return;
+        }
+        for (Closeable closeable : closeables) {
+            if (closeable != null) {
+                try {
+                    closeable.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
+
 
 }
