@@ -15,6 +15,6 @@ allprojects {
   
 ##### Module：
 ```
-implementation 'com.github.TeaLeafLi:UtilLib:v1.0'
+ implementation 'com.github.ljingya:UtilLib:v1.0'
 ```
   
